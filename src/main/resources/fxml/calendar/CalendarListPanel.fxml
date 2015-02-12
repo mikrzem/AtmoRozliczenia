@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"> 
+   <AnchorPane VBox.vgrow="ALWAYS">
+      <children>
+         <Label text="Data od:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="13" prefWidth="80"/>  
+         <DatePicker fx:id="dateFrom" AnchorPane.leftAnchor="95" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10"/>
+         <Label text="Data do:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="38" prefWidth="80"/> 
+         <DatePicker fx:id="dateTo" AnchorPane.leftAnchor="95" AnchorPane.topAnchor="35" AnchorPane.rightAnchor="10"/>
+         <Label text="Kalendarze" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="63" prefWidth="80"/> 
+         <Button text="Pobierz kalendarze" onAction="#handleLoadCalendars"  AnchorPane.leftAnchor="95" AnchorPane.topAnchor="60" AnchorPane.rightAnchor="10"/>
+         <TableView fx:id="calendarList" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10" VBox.vgrow="ALWAYS"/>    
+      </children>
+   </AnchorPane>
+</fx:root>

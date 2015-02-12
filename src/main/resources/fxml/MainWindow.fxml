@@ -6,9 +6,10 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import pl.atmoterm.atmorozliczenia.calendar.components.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pl.atmoterm.atmorozliczenia.MainWindowController">
+<AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pl.atmoterm.atmorozliczenia.MainWindowController">
    <children>
       <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
         <menus>
@@ -19,5 +20,18 @@
           </Menu>
         </menus>
       </MenuBar>
+      <GridPane AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.topAnchor="30" GridPane.vgrow="ALWAYS">
+         <columnConstraints>
+            <ColumnConstraints percentWidth="40"/> 
+            <ColumnConstraints percentWidth="60"/> 
+         </columnConstraints>
+         <AnchorPane GridPane.columnIndex="0" GridPane.vgrow="ALWAYS">
+            <children>
+               <CalendarListPanel fx:id="filterList" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="30"/> 
+               <Button onAction="#handleEventLoad" text="Pobierz zdarzenia" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10"/>     
+            </children>
+         </AnchorPane> 
+         <EventListPanel fx:id="eventList" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS"/>  
+      </GridPane>    
    </children>
 </AnchorPane>
