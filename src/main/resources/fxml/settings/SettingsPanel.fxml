@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" fx:controller="pl.atmoterm.atmorozliczenia.settings.components.SettingsPanelController">
+    <stylesheets>
+        <URL value="@/styles/settingspanel.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="80.0" text="Client Id:" />
+      <TextField fx:id="clientId"  AnchorPane.leftAnchor="94" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10"/>
+      <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="80.0" text="Client secret:" />
+      <TextField fx:id="clientSecret" AnchorPane.leftAnchor="94" AnchorPane.topAnchor="48" AnchorPane.rightAnchor="10"/>
+      <Button defaultButton="true" onAction="#handleSave"  AnchorPane.leftAnchor="10" AnchorPane.topAnchor="86" AnchorPane.rightAnchor="10"/>   
+   </children>
+</AnchorPane>
