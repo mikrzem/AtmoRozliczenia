@@ -103,7 +103,7 @@ public class GoogleCalendarService {
             Events list = request.execute();
             request.setPageToken(list.getNextPageToken());
             list.getItems().stream().forEach((i) -> {
-               if (!i.isEndTimeUnspecified() && !i.getStart().getDate().isDateOnly()) {
+               if (!i.isEndTimeUnspecified() && i.getStart() != null && i.getStart().getDateTime()!= null && i.getEnd() != null && i.getEnd().getDateTime() != null) {
                   GoogleEvent e = new GoogleEvent();
                   e.setFullName(i.getSummary());
                   e.setStartTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(i.getStart().getDateTime().getValue()), ZoneId.systemDefault()));

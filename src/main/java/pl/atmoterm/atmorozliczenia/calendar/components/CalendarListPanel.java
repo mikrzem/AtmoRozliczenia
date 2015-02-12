@@ -53,14 +53,19 @@ public class CalendarListPanel extends VBox {
 
       googleCalendarService = new GoogleCalendarService();
 
+      calendarList.setEditable(true);
       dateTo.setValue(LocalDate.now());
+      dateTo.setConverter(new LocalDateToStringConverter());
       dateFrom.setValue(LocalDate.now().minusMonths(1));
+      dateFrom.setConverter(new LocalDateToStringConverter());
       TableColumn<GoogleCalendarItem, Boolean> selected = new TableColumn<>();
       selected.setCellValueFactory((TableColumn.CellDataFeatures<GoogleCalendarItem, Boolean> param) -> param.getValue().selectedProperty);
-      selected.setEditable(true);
       selected.setCellFactory(CheckBoxTableCell.forTableColumn(selected));
+      selected.setEditable(true);
+      selected.prefWidthProperty().bind(calendarList.widthProperty().multiply(0.09));
       TableColumn<GoogleCalendarItem, String> name = new TableColumn<>("Kalendarz");
       name.setCellValueFactory((TableColumn.CellDataFeatures<GoogleCalendarItem, String> param) -> param.getValue().nameProperty);
+      name.prefWidthProperty().bind(calendarList.widthProperty().multiply(0.9));
       calendarList.getColumns().addAll(selected, name);
       calendarList.setPlaceholder(new Label("Brak danych"));
    }

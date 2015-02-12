@@ -2,6 +2,7 @@ package pl.atmoterm.atmorozliczenia.calendar.components;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ public class EventListPanel extends VBox {
       VBox.setVgrow(table, Priority.ALWAYS);
       VBox.setMargin(table, new Insets(10, 10, 10, 10));
       table.setPlaceholder(new Label("Brak danych"));
+      table.setEditable(true);
       TableColumn<GoogleEvent, String> project = new TableColumn<>("Projekt");
       project.setCellValueFactory(new PropertyValueFactory<>("project"));
       project.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -44,9 +46,11 @@ public class EventListPanel extends VBox {
       TableColumn<GoogleEvent, LocalDateTime> start = new TableColumn<>("Od");
       start.setCellValueFactory(new PropertyValueFactory<>("startTime"));
       start.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+      start.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateTimeToStringConverter()));
       TableColumn<GoogleEvent, LocalDateTime> end = new TableColumn<>("Do");
       end.setCellValueFactory(new PropertyValueFactory<>("endTime"));
       end.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
+      end.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateTimeToStringConverter()));
       TableColumn<GoogleEvent, Float> hours = new TableColumn<>("NR");
       hours.setCellValueFactory(new PropertyValueFactory<>("hours"));
       hours.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Float>() {
@@ -70,7 +74,7 @@ public class EventListPanel extends VBox {
             }
          }
       }));
-      hours.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+      hours.prefWidthProperty().bind(table.widthProperty().multiply(0.09));
       hours.setEditable(true);
       table.getColumns().addAll(project, task, start, end, hours);
       
@@ -88,4 +92,5 @@ public class EventListPanel extends VBox {
    public void clearData() {
       table.setItems(FXCollections.observableList(new ArrayList<>()));
    }
+
 }
