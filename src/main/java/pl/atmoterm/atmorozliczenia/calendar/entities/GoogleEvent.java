@@ -2,9 +2,9 @@ package pl.atmoterm.atmorozliczenia.calendar.entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import javafx.beans.property.FloatProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,7 +16,7 @@ public class GoogleEvent {
    private final StringProperty taskProperty = new SimpleStringProperty();
    private final Property<LocalDateTime> startTimeProperty = new SimpleObjectProperty<>();
    private final Property<LocalDateTime> endTimeProperty = new SimpleObjectProperty<>();
-   private final FloatProperty hoursProperty = new SimpleFloatProperty();
+   private final DoubleProperty hoursProperty = new SimpleDoubleProperty();
 
    public String getFullName() {
       if (StringUtils.isNotBlank(getProject())) {
@@ -91,7 +91,7 @@ public class GoogleEvent {
       }
    }
 
-   public Float getHours() {
+   public Double getHours() {
       if (hoursProperty.getValue() == null) {
          calculateHours();
       }

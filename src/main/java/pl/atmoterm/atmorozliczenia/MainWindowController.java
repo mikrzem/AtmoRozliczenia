@@ -31,7 +31,7 @@ public class MainWindowController implements Initializable {
    private void handleSettings(ActionEvent event) {
       try {
          Stage newWindow = new Stage();
-         newWindow.setTitle("Ustawienia Google");
+         newWindow.setTitle("Ustawienia ogólne");
          Parent root = FXMLLoader.load(getClass().getResource("/fxml/settings/SettingsPanel.fxml"));
          Scene scene = new Scene(root);
          newWindow.setScene(scene);
