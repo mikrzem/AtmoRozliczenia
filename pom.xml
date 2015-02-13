@@ -36,12 +36,17 @@
             <version>3.3.2</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi</artifactId>
+           <version>3.11</version>
+        </dependency>
+        <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml</artifactId>
+           <version>3.11</version>
+        </dependency>
     </dependencies>
-
-    <organization>
-        <!-- Used as the 'Vendor' for JNLP generation -->
-        <name>Your Organisation</name>
-    </organization>
 
     <build>
         <plugins>
