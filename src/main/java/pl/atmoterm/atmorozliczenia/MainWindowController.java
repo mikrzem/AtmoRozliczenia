@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.atmoterm.atmorozliczenia.calendar.components.CalendarListPanel;
 import pl.atmoterm.atmorozliczenia.calendar.components.EventListPanel;
+import pl.atmoterm.atmorozliczenia.excel.components.ExcelExportPanelController;
 
 public class MainWindowController implements Initializable {
 
@@ -44,5 +46,23 @@ public class MainWindowController implements Initializable {
    @FXML
    private void handleEventLoad(ActionEvent event) {
       eventList.loadData(filterList.getSelected(), filterList.getDateFrom(), filterList.getDateTo());
+   }
+   
+   @FXML
+   private void handleSaveExcel(ActionEvent event) {
+      try {
+         Stage newWindow = new Stage();
+         newWindow.setTitle("Zapis do Excela");
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/excel/ExcelExportPanel.fxml"));
+         loader.setBuilderFactory(new JavaFXBuilderFactory());
+         Parent root = loader.load();
+         ExcelExportPanelController controller = (ExcelExportPanelController)loader.getController();
+         controller.setData(eventList.getData());
+         Scene scene = new Scene(root);
+         newWindow.setScene(scene);
+         newWindow.showAndWait();
+      } catch (Exception ex) {
+         logger.log(Level.SEVERE, null, ex);
+      }
    }
 }

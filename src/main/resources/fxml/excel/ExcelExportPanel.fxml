@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.atmoterm.atmorozliczenia.excel.components.ExcelExportPanelController"> 
+   <Label text="Zapisz do:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="12" prefHeight="17" prefWidth="100"/>
+   <Button text="Wybierz" AnchorPane.leftAnchor="115" AnchorPane.topAnchor="10" prefWidth="100" prefHeight="20" onAction="#handleChooseOutput"/>
+   <Label fx:id="outputFileLabel" AnchorPane.leftAnchor="220" AnchorPane.topAnchor="12" AnchorPane.rightAnchor="10" prefHeight="17"/>        
+   <Label text="Szablon:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="42" prefHeight="17" prefWidth="100"/>
+   <Button text="Wybierz" AnchorPane.leftAnchor="115" AnchorPane.topAnchor="40" prefWidth="100" prefHeight="20" onAction="#handleChooseTemplate"/>
+   <Label fx:id="templateFileLabel" AnchorPane.leftAnchor="220" AnchorPane.topAnchor="42" AnchorPane.rightAnchor="10" prefHeight="17"/>
+   <Label text="Pierwszy wiersz:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="72" prefWidth="100"/>
+   <TextField fx:id="initialRow" AnchorPane.leftAnchor="115" AnchorPane.topAnchor="70" AnchorPane.rightAnchor="10"/>       
+   <Label text="Pierwsza kolumna:" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="102" prefWidth="100"/>
+   <TextField fx:id="initialCol" AnchorPane.leftAnchor="115" AnchorPane.topAnchor="100" AnchorPane.rightAnchor="10"/>       
+   <Label fx:id="errorLabel" AnchorPane.leftAnchor="10" AnchorPane.bottomAnchor="40" AnchorPane.rightAnchor="10"/>    
+   <Button text="Export" onAction="#handleExport"  AnchorPane.leftAnchor="10" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10"/>          
+</AnchorPane>

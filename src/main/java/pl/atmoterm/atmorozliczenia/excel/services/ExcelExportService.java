@@ -33,31 +33,36 @@ public class ExcelExportService {
    }
 
    public boolean loadTemplate(File file) {
-      try {
-         workbook = new XSSFWorkbook(file);
+      if (file == null) {
+         workbook = new XSSFWorkbook();
          return true;
-      } catch (IOException | InvalidFormatException ex) {
-         logger.log(Level.SEVERE, null, ex);
-         return false;
+      } else {
+         try {
+            workbook = new XSSFWorkbook(file);
+            return true;
+         } catch (IOException | InvalidFormatException ex) {
+            logger.log(Level.SEVERE, null, ex);
+            return false;
+         }
       }
    }
 
    public void writeData(List<GoogleEvent> events, int initialRow, int initialCol) {
-      if(!events.isEmpty()) {
       Sheet sheet = workbook.getNumberOfSheets() == 0 ? workbook.createSheet() : workbook.getSheetAt(0);
-      LocalDateTime maxDate = events.stream()
-              .max((GoogleEvent o1, GoogleEvent o2) -> ObjectUtils.compare(o1.getStartTime(), o2.getStartTime()))
-              .get().getStartTime();
-      year = maxDate.getYear();
-      month = maxDate.getMonthValue();
-      int row = initialRow;
-      for(GoogleEvent e : events) {
-         writeRow(sheet.getRow(row), e, initialCol);
-         row++;
-      }
+      if (!events.isEmpty()) {
+         LocalDateTime maxDate = events.stream()
+                 .max((GoogleEvent o1, GoogleEvent o2) -> ObjectUtils.compare(o1.getStartTime(), o2.getStartTime()))
+                 .get().getStartTime();
+         year = maxDate.getYear();
+         month = maxDate.getMonthValue();
+         int row = initialRow;
+         for (GoogleEvent e : events) {
+            writeRow(sheet.createRow(row), e, initialCol);
+            row++;
+         }
       }
    }
-   
+
    private void writeRow(Row row, GoogleEvent event, int offset) {
       write(row, offset, year.doubleValue());
       write(row, offset + 1, month.doubleValue());
@@ -68,23 +73,23 @@ public class ExcelExportService {
       write(row, offset + 6, dateConverter.toString(event.getEndTime().toLocalDate()));
       write(row, offset + 8, event.getProject());
    }
-   
+
    private void write(Row r, int col, String data) {
-      if(data == null) {
+      if (data == null) {
          data = "";
       }
       r.createCell(col).setCellValue(data);
    }
-   
+
    private void write(Row r, int col, Double data) {
-      if(data == null) {
+      if (data == null) {
          data = 0d;
       }
       r.createCell(col).setCellValue(data);
    }
 
    public boolean saveTo(File file) {
-      if(!file.exists()) {
+      if (!file.exists()) {
          try {
             file.createNewFile();
          } catch (IOException ex) {
@@ -97,6 +102,6 @@ public class ExcelExportService {
       } catch (IOException ex) {
          logger.log(Level.SEVERE, null, ex);
          return false;
-      } 
+      }
    }
 }

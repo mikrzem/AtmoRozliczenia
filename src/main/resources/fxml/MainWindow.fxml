@@ -18,6 +18,11 @@
               <MenuItem mnemonicParsing="false" text="Ogólne" onAction="#handleSettings"/>
             </items>
           </Menu>
+          <Menu mnemonicParsing="true" text="Zapisz">
+             <items>
+                <MenuItem mnemonicParsing="false" text="Excel" onAction="#handleSaveExcel"/>  
+             </items>
+          </Menu> 
         </menus>
       </MenuBar>
       <GridPane AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.topAnchor="30" GridPane.vgrow="ALWAYS">

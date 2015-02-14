@@ -51,11 +51,11 @@ public class EventListPanel extends VBox {
       end.setCellValueFactory(new PropertyValueFactory<>("endTime"));
       end.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
       end.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateTimeToStringConverter()));
-      TableColumn<GoogleEvent, Float> hours = new TableColumn<>("NR");
+      TableColumn<GoogleEvent, Double> hours = new TableColumn<>("NR");
       hours.setCellValueFactory(new PropertyValueFactory<>("hours"));
-      hours.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Float>() {
+      hours.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
          @Override
-         public String toString(Float object) {
+         public String toString(Double object) {
             if(object == null) {
                return "";
             }
@@ -63,12 +63,12 @@ public class EventListPanel extends VBox {
          }
          
          @Override
-         public Float fromString(String string) {
+         public Double fromString(String string) {
             if(StringUtils.isBlank(string)) {
                return null;
             }
             try {
-               return Float.parseFloat(string);
+               return Double.parseDouble(string);
             } catch(NumberFormatException ex) {
                return null;
             }
