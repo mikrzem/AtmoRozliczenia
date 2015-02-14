@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import pl.atmoterm.atmorozliczenia.calendar.components.CalendarListPanel;
 import pl.atmoterm.atmorozliczenia.calendar.components.EventListPanel;
 import pl.atmoterm.atmorozliczenia.excel.components.ExcelExportPanelController;
+import pl.atmoterm.atmorozliczenia.settings.components.ProjectSettingsPanelController;
 
 public class MainWindowController implements Initializable {
 
@@ -35,6 +36,24 @@ public class MainWindowController implements Initializable {
          Stage newWindow = new Stage();
          newWindow.setTitle("Ustawienia ogólne");
          Parent root = FXMLLoader.load(getClass().getResource("/fxml/settings/SettingsPanel.fxml"));
+         Scene scene = new Scene(root);
+         newWindow.setScene(scene);
+         newWindow.showAndWait();
+      } catch (Exception ex) {
+         logger.log(Level.SEVERE, null, ex);
+      }
+   }
+   
+   @FXML
+   private void handleProjects(ActionEvent event) {
+      try {
+         Stage newWindow = new Stage();
+         newWindow.setTitle("Projekty");
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings/ProjectSettingsPanel.fxml"));
+         loader.setBuilderFactory(new JavaFXBuilderFactory());
+         Parent root = loader.load();
+         ProjectSettingsPanelController controller = (ProjectSettingsPanelController)loader.getController();
+         controller.setEvents(eventList.getData());
          Scene scene = new Scene(root);
          newWindow.setScene(scene);
          newWindow.showAndWait();

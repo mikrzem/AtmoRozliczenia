@@ -3,9 +3,14 @@ package pl.atmoterm.atmorozliczenia.settings.services;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.ObjectUtils;
 
 public class SettingsManager {
 
@@ -23,6 +28,8 @@ public class SettingsManager {
    private final Properties properties;
    private boolean initialized = false;
 
+   private final List<ProjectSettings> projects = new ArrayList<>();
+
    private SettingsManager() {
       properties = new Properties();
       try (FileInputStream input = new FileInputStream("config.properties")) {
@@ -31,6 +38,40 @@ public class SettingsManager {
       } catch (Exception ex) {
          logger.log(Level.SEVERE, "Błąd podczas otwierania ustawień", ex);
          initialized = false;
+      }
+      loadProjectSettings();
+   }
+
+   private void loadProjectSettings() {
+      for (String key : properties.stringPropertyNames()) {
+         if (key.startsWith("project")) {
+            String[] parts = key.split("\\.");
+            if (parts.length == 3) {
+               int index = Integer.parseInt(parts[1]);
+               Optional<ProjectSettings> setting = projects.stream().filter((p) -> p.getIndex() == index).findFirst();
+               ProjectSettings s;
+               if (setting.isPresent()) {
+                  s = setting.get();
+               } else {
+                  s = new ProjectSettings(index);
+                  projects.add(s);
+               }
+               switch (parts[2]) {
+                  case "from":
+                     s.setFrom(properties.getProperty(key));
+                     break;
+                  case "to":
+                     s.setTo(properties.getProperty(key));
+                     break;
+                  case "id":
+                     s.setId(properties.getProperty(key));
+                     break;
+                  case "leader":
+                     s.setLeader(properties.getProperty(key));
+                     break;
+               }
+            }
+         }
       }
    }
 
@@ -76,20 +117,50 @@ public class SettingsManager {
    public String getExportPerson() {
       return properties.getProperty(exportPerson);
    }
-   
+
    public void setExportPerson(String person) {
       properties.setProperty(exportPerson, person);
    }
-   
+
    public String getExportPosition() {
       return properties.getProperty(exportPosition);
    }
-   
+
    public void setExportPosition(String position) {
       properties.setProperty(exportPosition, position);
    }
-   
+
    public boolean isInitialized() {
       return initialized;
+   }
+
+   public List<ProjectSettings> getProjects() {
+      return projects;
+   }
+
+   public void setProject(ProjectSettings setting) {
+      if (!projects.contains(setting)) {
+         projects.add(setting);
+      }
+      properties.setProperty("project." + setting.getIndex() + ".from", setting.getFrom());
+      properties.setProperty("project." + setting.getIndex() + ".to", setting.getTo());
+      properties.setProperty("project." + setting.getIndex() + ".id", setting.getId());
+      properties.setProperty("project." + setting.getIndex() + ".leader", setting.getLeader());
+   }
+   
+   public void setProjects() {
+      for(ProjectSettings s : projects) {
+         setProject(s);
+      }
+   }
+
+   public ProjectSettings newSetting(String from) {
+      Optional<ProjectSettings> max = projects.stream().max((o1, o2) -> ObjectUtils.compare(o1.getIndex(), o2.getIndex()));
+      int maxIndex = max.isPresent() ? max.get().getIndex() : 0;
+      maxIndex++;
+      ProjectSettings settings = new ProjectSettings(maxIndex);
+      settings.setFrom(from);
+      projects.add(settings);
+      return settings;
    }
 }

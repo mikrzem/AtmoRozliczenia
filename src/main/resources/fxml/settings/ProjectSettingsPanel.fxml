@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.atmoterm.atmorozliczenia.settings.components.ProjectSettingsPanelController">
+    <TableView fx:id="projectList" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="100"/>  
+    <Label text="Źródło" AnchorPane.leftAnchor="10"  AnchorPane.bottomAnchor="72" prefWidth="80"/>
+    <TextField fx:id="newRow" AnchorPane.leftAnchor="85" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="75"/>
+    <Button text="Dodaj" onAction="#handleNewRow" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="10" prefWidth="60"/>
+    <Button text="Dodaj wszystkie pobrane projekty" onAction="#handleLoadData" AnchorPane.bottomAnchor="40" AnchorPane.rightAnchor="10" AnchorPane.leftAnchor="10" />
+    <Button text="Zapisz" onAction="#handleSave" AnchorPane.leftAnchor="10" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10"/>             
+</AnchorPane>
