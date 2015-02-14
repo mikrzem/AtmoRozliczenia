@@ -2,9 +2,7 @@ package pl.atmoterm.atmorozliczenia.calendar.entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,7 +14,7 @@ public class GoogleEvent {
    private final StringProperty taskProperty = new SimpleStringProperty();
    private final Property<LocalDateTime> startTimeProperty = new SimpleObjectProperty<>();
    private final Property<LocalDateTime> endTimeProperty = new SimpleObjectProperty<>();
-   private final DoubleProperty hoursProperty = new SimpleDoubleProperty();
+   private final Property<Double> hoursProperty = new SimpleObjectProperty<>();
 
    public String getFullName() {
       if (StringUtils.isNotBlank(getProject())) {
@@ -87,7 +85,7 @@ public class GoogleEvent {
 
    private void calculateHours() {
       if (getStartTime() != null && getEndTime() != null) {
-         setHours((float) ChronoUnit.MINUTES.between(getStartTime(), getEndTime()) / 60f);
+         setHours((double) ChronoUnit.MINUTES.between(getStartTime(), getEndTime()) / 60f);
       }
    }
 
@@ -98,7 +96,27 @@ public class GoogleEvent {
       return hoursProperty.getValue();
    }
 
-   public void setHours(Float hours) {
+   public void setHours(Double hours) {
       hoursProperty.setValue(hours);
+   }
+
+   public StringProperty getProjectProperty() {
+      return projectProperty;
+   }
+
+   public StringProperty getTaskProperty() {
+      return taskProperty;
+   }
+
+   public Property<LocalDateTime> getStartTimeProperty() {
+      return startTimeProperty;
+   }
+
+   public Property<LocalDateTime> getEndTimeProperty() {
+      return endTimeProperty;
+   }
+
+   public Property<Double> getHoursProperty() {
+      return hoursProperty;
    }
 }

@@ -34,12 +34,12 @@ public class EventListPanel extends VBox {
       table.setPlaceholder(new Label("Brak danych"));
       table.setEditable(true);
       TableColumn<GoogleEvent, String> project = new TableColumn<>("Projekt");
-      project.setCellValueFactory(new PropertyValueFactory<>("project"));
+      project.setCellValueFactory((c) -> c.getValue().getProjectProperty());
       project.setCellFactory(TextFieldTableCell.forTableColumn());
       project.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
       project.setEditable(true);
       TableColumn<GoogleEvent, String> task = new TableColumn<>("Zadanie");
-      task.setCellValueFactory(new PropertyValueFactory<>("task"));
+      task.setCellValueFactory((c) -> c.getValue().getTaskProperty());
       task.setCellFactory(TextFieldTableCell.forTableColumn());
       task.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
       task.setEditable(true);
@@ -52,7 +52,7 @@ public class EventListPanel extends VBox {
       end.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
       end.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateTimeToStringConverter()));
       TableColumn<GoogleEvent, Double> hours = new TableColumn<>("NR");
-      hours.setCellValueFactory(new PropertyValueFactory<>("hours"));
+      hours.setCellValueFactory((c) -> c.getValue().getHoursProperty());
       hours.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Double>() {
          @Override
          public String toString(Double object) {
