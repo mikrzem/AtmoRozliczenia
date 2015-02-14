@@ -5,6 +5,13 @@ import javafx.beans.property.StringProperty;
 
 public class ProjectSettings {
 
+   public static ProjectSettings emptySetting(String from) {
+      ProjectSettings res = new ProjectSettings(-1);
+      res.setFrom(from);
+      res.setTo(from);
+      return res;
+   }
+   
    private final int index;
    private final StringProperty fromProperty = new SimpleStringProperty();
    private final StringProperty toProperty = new SimpleStringProperty();

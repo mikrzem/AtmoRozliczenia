@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import pl.atmoterm.atmorozliczenia.calendar.components.LocalDateToStringConverter;
 import pl.atmoterm.atmorozliczenia.calendar.entities.GoogleEvent;
+import pl.atmoterm.atmorozliczenia.settings.services.ProjectSettings;
 import pl.atmoterm.atmorozliczenia.settings.services.SettingsManager;
 
 public class ExcelExportService {
@@ -71,7 +72,10 @@ public class ExcelExportService {
       write(row, offset + 4, event.getTask());
       write(row, offset + 5, event.getHours());
       write(row, offset + 6, dateConverter.toString(event.getEndTime().toLocalDate()));
-      write(row, offset + 8, event.getProject());
+      ProjectSettings project = SettingsManager.get().getForProject(event.getProject());
+      write(row, offset + 8, project.getTo());
+      write(row, offset + 9, project.getId());
+      write(row, offset + 10, project.getLeader());
    }
 
    private void write(Row r, int col, String data) {

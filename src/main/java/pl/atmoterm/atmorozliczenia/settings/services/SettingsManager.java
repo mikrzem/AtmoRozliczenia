@@ -163,4 +163,16 @@ public class SettingsManager {
       projects.add(settings);
       return settings;
    }
+   
+   public ProjectSettings getForProject(String from) {
+      if(from == null) {
+         return ProjectSettings.emptySetting("");
+      }
+      Optional<ProjectSettings> res = projects.stream().filter((f) -> from.equals(f.getFrom())).findFirst();
+      if(res.isPresent()) {
+         return res.get();
+      } else {
+         return ProjectSettings.emptySetting(from);
+      }
+   }
 }
