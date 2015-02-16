@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class SettingsManager {
 
@@ -97,12 +98,18 @@ public class SettingsManager {
    private static final String exportPerson = "export.person";
    private static final String exportPosition = "export.position";
 
+   private void safeSet(String property, String value) {
+      if (StringUtils.isNotBlank(property)) {
+         properties.setProperty(property, StringUtils.defaultString(value));
+      }
+   }
+
    public String getGoogleClientId() {
       return properties.getProperty(googleId);
    }
 
    public void setGoogleClientId(String clientId) {
-      properties.setProperty(googleId, clientId);
+      safeSet(googleId, clientId);
    }
 
    public String getGoogleClientSecret() {
@@ -110,7 +117,7 @@ public class SettingsManager {
    }
 
    public void setGoogleClientSecret(String clientSecret) {
-      properties.setProperty(googleClient, clientSecret);
+      safeSet(googleClient, clientSecret);
    }
 
    public String getExportPerson() {
@@ -118,7 +125,7 @@ public class SettingsManager {
    }
 
    public void setExportPerson(String person) {
-      properties.setProperty(exportPerson, person);
+      safeSet(exportPerson, person);
    }
 
    public String getExportPosition() {
@@ -126,7 +133,7 @@ public class SettingsManager {
    }
 
    public void setExportPosition(String position) {
-      properties.setProperty(exportPosition, position);
+      safeSet(exportPosition, position);
    }
 
    public boolean isInitialized() {
@@ -141,16 +148,16 @@ public class SettingsManager {
       if (!projects.contains(setting)) {
          projects.add(setting);
       }
-      properties.setProperty("project." + setting.getIndex() + ".from", setting.getFrom());
-      properties.setProperty("project." + setting.getIndex() + ".to", setting.getTo());
-      properties.setProperty("project." + setting.getIndex() + ".id", setting.getId());
-      properties.setProperty("project." + setting.getIndex() + ".leader", setting.getLeader());
+      safeSet("project." + setting.getIndex() + ".from", setting.getFrom());
+      safeSet("project." + setting.getIndex() + ".to", setting.getTo());
+      safeSet("project." + setting.getIndex() + ".id", setting.getId());
+      safeSet("project." + setting.getIndex() + ".leader", setting.getLeader());
    }
-   
+
    public void setProjects() {
-      for(ProjectSettings s : projects) {
+      projects.stream().forEach((s) -> {
          setProject(s);
-      }
+      });
    }
 
    public ProjectSettings newSetting(String from) {
@@ -163,13 +170,13 @@ public class SettingsManager {
       projects.add(settings);
       return settings;
    }
-   
+
    public ProjectSettings getForProject(String from) {
-      if(from == null) {
+      if (from == null) {
          return ProjectSettings.emptySetting("");
       }
       Optional<ProjectSettings> res = projects.stream().filter((f) -> from.equals(f.getFrom())).findFirst();
-      if(res.isPresent()) {
+      if (res.isPresent()) {
          return res.get();
       } else {
          return ProjectSettings.emptySetting(from);
