@@ -27,6 +27,7 @@
           <Menu mnemonicParsing="true" text="Narzędzia">
              <items>
                 <MenuItem mnemonicParsing="true" text="Połącz takie same zadania" onAction="#handleMergeTasks"/>  
+                <MenuItem mnemonicParsing="true" text="Podsumowanie" onAction="#handleSummary"/>  
              </items>
           </Menu>
         </menus>

@@ -14,7 +14,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.atmoterm.atmorozliczenia.calendar.components.CalendarListPanel;
 import pl.atmoterm.atmorozliczenia.calendar.components.EventListPanel;
-import pl.atmoterm.atmorozliczenia.calendar.services.GoogleCalendarService;
+import pl.atmoterm.atmorozliczenia.calendar.components.ProjectSummaryWindowController;
+import pl.atmoterm.atmorozliczenia.calendar.services.GoogleCalendarUtils;
 import pl.atmoterm.atmorozliczenia.excel.components.ExcelExportPanelController;
 import pl.atmoterm.atmorozliczenia.settings.components.ProjectSettingsPanelController;
 
@@ -88,6 +89,24 @@ public class MainWindowController implements Initializable {
    
    @FXML
    private void handleMergeTasks(ActionEvent event) {
-      eventList.setData(GoogleCalendarService.mergeSameEvents(eventList.getData()));
+      eventList.setData(GoogleCalendarUtils.mergeSameEvents(eventList.getData()));
+   }
+   
+   @FXML
+   private void handleSummary(ActionEvent event) {
+      try {
+         Stage newWindow = new Stage();
+         newWindow.setTitle("Podsumowanie");
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/calendar/ProjectSummaryWindow.fxml"));
+         loader.setBuilderFactory(new JavaFXBuilderFactory());
+         Parent root = loader.load();
+         ProjectSummaryWindowController controller = (ProjectSummaryWindowController)loader.getController();
+         controller.setData(eventList.getData());
+         Scene scene = new Scene(root);
+         newWindow.setScene(scene);
+         newWindow.showAndWait();
+      } catch (Exception ex) {
+         logger.log(Level.SEVERE, null, ex);
+      }
    }
 }

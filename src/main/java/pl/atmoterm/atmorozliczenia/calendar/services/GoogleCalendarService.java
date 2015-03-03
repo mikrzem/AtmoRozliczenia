@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.ObjectUtils;
@@ -126,31 +124,6 @@ public class GoogleCalendarService {
          res.addAll(getEvents(c, dateFrom, dateTo));
       });
       res.sort((GoogleEvent o1, GoogleEvent o2) -> ObjectUtils.compare(o1.getStartTime(), o2.getStartTime()));
-      return res;
-   }
-
-   public static List<GoogleEvent> mergeSameEvents(List<GoogleEvent> events) {
-      List<GoogleEvent> res = new ArrayList<>();
-      for (GoogleEvent e : events) {
-         Optional<GoogleEvent> r = res.stream().filter(
-                 v -> Objects.equals(v.getProject(), e.getProject())
-                 && Objects.equals(v.getTask(), e.getTask()))
-                 .findAny();
-         if (r.isPresent()) {
-            if (e.getHours() != null) {
-               if (r.get().getHours() == null) {
-                  r.get().setHours(0d);
-               }
-               r.get().setHours(r.get().getHours() + e.getHours());
-               r.get().setStartTime(null);
-               if(ObjectUtils.compare(r.get().getEndTime(), e.getEndTime()) < 0) {
-                  r.get().setEndTime(e.getEndTime());
-               }
-            }
-         } else {
-            res.add(e);
-         }
-      }
       return res;
    }
 }
