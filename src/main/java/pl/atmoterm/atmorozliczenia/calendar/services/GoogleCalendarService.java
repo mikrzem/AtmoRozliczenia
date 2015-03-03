@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.ObjectUtils;
@@ -103,7 +105,7 @@ public class GoogleCalendarService {
             Events list = request.execute();
             request.setPageToken(list.getNextPageToken());
             list.getItems().stream().forEach((i) -> {
-               if (!i.isEndTimeUnspecified() && i.getStart() != null && i.getStart().getDateTime()!= null && i.getEnd() != null && i.getEnd().getDateTime() != null) {
+               if (!i.isEndTimeUnspecified() && i.getStart() != null && i.getStart().getDateTime() != null && i.getEnd() != null && i.getEnd().getDateTime() != null) {
                   GoogleEvent e = new GoogleEvent();
                   e.setFullName(i.getSummary());
                   e.setStartTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(i.getStart().getDateTime().getValue()), ZoneId.systemDefault()));
@@ -117,13 +119,38 @@ public class GoogleCalendarService {
       }
       return res;
    }
-   
+
    public List<GoogleEvent> getEvents(List<GoogleCalendar> calendars, final LocalDate dateFrom, final LocalDate dateTo) {
       List<GoogleEvent> res = new ArrayList<>();
       calendars.forEach((c) -> {
          res.addAll(getEvents(c, dateFrom, dateTo));
       });
       res.sort((GoogleEvent o1, GoogleEvent o2) -> ObjectUtils.compare(o1.getStartTime(), o2.getStartTime()));
+      return res;
+   }
+
+   public static List<GoogleEvent> mergeSameEvents(List<GoogleEvent> events) {
+      List<GoogleEvent> res = new ArrayList<>();
+      for (GoogleEvent e : events) {
+         Optional<GoogleEvent> r = res.stream().filter(
+                 v -> Objects.equals(v.getProject(), e.getProject())
+                 && Objects.equals(v.getTask(), e.getTask()))
+                 .findAny();
+         if (r.isPresent()) {
+            if (e.getHours() != null) {
+               if (r.get().getHours() == null) {
+                  r.get().setHours(0d);
+               }
+               r.get().setHours(r.get().getHours() + e.getHours());
+               r.get().setStartTime(null);
+               if(ObjectUtils.compare(r.get().getEndTime(), e.getEndTime()) < 0) {
+                  r.get().setEndTime(e.getEndTime());
+               }
+            }
+         } else {
+            res.add(e);
+         }
+      }
       return res;
    }
 }

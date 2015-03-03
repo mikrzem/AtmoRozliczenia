@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.atmoterm.atmorozliczenia.calendar.components.CalendarListPanel;
 import pl.atmoterm.atmorozliczenia.calendar.components.EventListPanel;
+import pl.atmoterm.atmorozliczenia.calendar.services.GoogleCalendarService;
 import pl.atmoterm.atmorozliczenia.excel.components.ExcelExportPanelController;
 import pl.atmoterm.atmorozliczenia.settings.components.ProjectSettingsPanelController;
 
@@ -83,5 +84,10 @@ public class MainWindowController implements Initializable {
       } catch (Exception ex) {
          logger.log(Level.SEVERE, null, ex);
       }
+   }
+   
+   @FXML
+   private void handleMergeTasks(ActionEvent event) {
+      eventList.setData(GoogleCalendarService.mergeSameEvents(eventList.getData()));
    }
 }

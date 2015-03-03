@@ -2,7 +2,6 @@ package pl.atmoterm.atmorozliczenia.calendar.components;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -87,6 +86,10 @@ public class EventListPanel extends VBox {
    
    public List<GoogleEvent> getData() {
       return table.getItems();
+   }
+   
+   public void setData(List<GoogleEvent> events) {
+      table.setItems(FXCollections.observableList(events));
    }
    
    public void clearData() {

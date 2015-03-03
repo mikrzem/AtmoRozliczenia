@@ -13,17 +13,22 @@
    <children>
       <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
         <menus>
-          <Menu mnemonicParsing="false" text="Ustawienia">
+          <Menu mnemonicParsing="true" text="Ustawienia">
             <items>
-              <MenuItem mnemonicParsing="false" text="Ogólne" onAction="#handleSettings"/>
-              <MenuItem mnemonicParsing="false" text="Projekty" onAction="#handleProjects"/>  
+              <MenuItem mnemonicParsing="true" text="Ogólne" onAction="#handleSettings"/>
+              <MenuItem mnemonicParsing="true" text="Projekty" onAction="#handleProjects"/>  
             </items>
           </Menu>
           <Menu mnemonicParsing="true" text="Zapisz">
              <items>
-                <MenuItem mnemonicParsing="false" text="Excel" onAction="#handleSaveExcel"/>  
+                <MenuItem mnemonicParsing="true" text="Excel" onAction="#handleSaveExcel"/>  
              </items>
           </Menu> 
+          <Menu mnemonicParsing="true" text="Narzędzia">
+             <items>
+                <MenuItem mnemonicParsing="true" text="Połącz takie same zadania" onAction="#handleMergeTasks"/>  
+             </items>
+          </Menu>
         </menus>
       </MenuBar>
       <GridPane AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.topAnchor="30" GridPane.vgrow="ALWAYS">
