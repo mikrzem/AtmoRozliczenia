@@ -1,10 +1,14 @@
 package pl.atmoterm.atmorozliczenia.excel.components;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +24,8 @@ import pl.atmoterm.atmorozliczenia.excel.services.ExcelExportService;
 
 public class ExcelExportPanelController implements Initializable {
 
+   private static final Logger logger = Logger.getLogger(ExcelExportPanelController.class.getName());
+   
    private final ExcelExportService service = new ExcelExportService();
 
    private List<GoogleEvent> events = new ArrayList<>();
@@ -86,6 +92,11 @@ public class ExcelExportPanelController implements Initializable {
       service.writeData(events, parseField(initialRow), parseField(initialCol));
       if(service.saveTo(outputFile)) {
          ((Node)event.getSource()).getScene().getWindow().hide();
+         try {
+            Desktop.getDesktop().open(outputFile);
+         } catch (IOException ex) {
+            logger.log(Level.SEVERE, "Błąd podczas otwierania excela", ex);
+         }
       } else {
          errorLabel.setText("Błąd podczas zapisu exportu.");
       }
