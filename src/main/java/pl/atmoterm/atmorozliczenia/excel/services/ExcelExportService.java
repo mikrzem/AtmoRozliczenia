@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -82,14 +83,22 @@ public class ExcelExportService {
       if (data == null) {
          data = "";
       }
-      r.createCell(col).setCellValue(data);
+      getCell(r, col).setCellValue(data);
    }
 
    private void write(Row r, int col, Double data) {
       if (data == null) {
          data = 0d;
       }
-      r.createCell(col).setCellValue(data);
+      getCell(r, col).setCellValue(data);
+   }
+   
+   private Cell getCell(Row r, int col) {
+      Cell c = r.getCell(col);
+      if(c == null) {
+         c = r.createCell(col);
+      }
+      return c;
    }
 
    public boolean saveTo(File file) {
