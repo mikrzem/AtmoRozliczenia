@@ -37,7 +37,7 @@ public class ProjectSummaryWindowController implements Initializable {
       id.setCellValueFactory(p -> p.getValue().projectIdProperty());
       id.prefWidthProperty().bind(summaryTable.widthProperty().multiply(0.2));
       TableColumn<ProjectSummary, String> leader = new TableColumn<>("Kierownik");
-      leader.setCellValueFactory(p -> p.getValue().projectIdProperty());
+      leader.setCellValueFactory(p -> p.getValue().projectLeaderProperty());
       leader.prefWidthProperty().bind(summaryTable.widthProperty().multiply(0.3));
       TableColumn<ProjectSummary, Double> hours = new TableColumn<>("NR");
       hours.setCellValueFactory(p -> p.getValue().hoursProperty());
