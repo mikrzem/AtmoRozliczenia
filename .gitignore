@@ -13,3 +13,5 @@ hs_err_pid*
 /target/
 /config.properties
 /datastore
+/nbactions.xml
+/nb-configuration.xml

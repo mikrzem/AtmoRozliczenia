@@ -2,6 +2,8 @@ package pl.atmoterm.atmorozliczenia.calendar.entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -34,10 +36,8 @@ public class GoogleEvent {
          } else {
             project = parts[0];
             if (parts.length > 2) {
-               task = "";
-               for (int i = 1; i < parts.length; i++) {
-                  task += parts[i];
-               }
+               List<String> rejoin = Arrays.asList(parts);
+               task = StringUtils.join(rejoin.subList(1, rejoin.size()), ":");
             } else {
                task = parts[1];
             }
